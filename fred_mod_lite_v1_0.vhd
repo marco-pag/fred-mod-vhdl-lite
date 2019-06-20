@@ -21,72 +21,72 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity fred_mod_lite_v1_0 is
-	generic (
+  generic (
     -- Parameters of Axi Slave Bus Interface
-    C_S00_AXI_DATA_WIDTH	: integer	:= 32;
-    C_S00_AXI_ADDR_WIDTH	: integer	:= 7;
+    C_S00_AXI_DATA_WIDTH  : integer := 32;
+    C_S00_AXI_ADDR_WIDTH  : integer := 7;
     
     -- Parameters of Axi Master Bus Interface
-    C_M00_AXI_ADDR_WIDTH	: integer	:= 32;
-    C_M00_AXI_DATA_WIDTH	: integer	:= 32
-	);
-	port (
+    C_M00_AXI_ADDR_WIDTH  : integer := 32;
+    C_M00_AXI_DATA_WIDTH  : integer := 32
+  );
+  port (
     -- Common signals
     interrupt : out std_logic;
-    ap_clk	  : in std_logic;
+    ap_clk    : in std_logic;
     ap_rst_n  : in std_logic;
 
     -- Ports of Axi Slave Bus Interface
-    --s_axi_ctrl_aclk	: in std_logic;
-    --s_axi_ctrl_aresetn	: in std_logic;
-    s_axi_ctrl_bus_awaddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
-    --s_axi_ctrl_bus_awprot	: in std_logic_vector(2 downto 0);
-    s_axi_ctrl_bus_awvalid	: in std_logic;
-    s_axi_ctrl_bus_awready	: out std_logic;
-    s_axi_ctrl_bus_wdata	: in std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
-    s_axi_ctrl_bus_wstrb	: in std_logic_vector((C_S00_AXI_DATA_WIDTH/8)-1 downto 0);
-    s_axi_ctrl_bus_wvalid	: in std_logic;
-    s_axi_ctrl_bus_wready	: out std_logic;
-    s_axi_ctrl_bus_bresp	: out std_logic_vector(1 downto 0);
-    s_axi_ctrl_bus_bvalid	: out std_logic;
-    s_axi_ctrl_bus_bready	: in std_logic;
-    s_axi_ctrl_bus_araddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
-    --s_axi_ctrl_bus_arprot	: in std_logic_vector(2 downto 0);
-    s_axi_ctrl_bus_arvalid	: in std_logic;
-    s_axi_ctrl_bus_arready	: out std_logic;
-    s_axi_ctrl_bus_rdata	: out std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
-    s_axi_ctrl_bus_rresp	: out std_logic_vector(1 downto 0);
-    s_axi_ctrl_bus_rvalid	: out std_logic;
-    s_axi_ctrl_bus_rready	: in std_logic;
+    --s_axi_ctrl_aclk : in std_logic;
+    --s_axi_ctrl_aresetn  : in std_logic;
+    s_axi_ctrl_bus_awaddr : in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
+    --s_axi_ctrl_bus_awprot : in std_logic_vector(2 downto 0);
+    s_axi_ctrl_bus_awvalid  : in std_logic;
+    s_axi_ctrl_bus_awready  : out std_logic;
+    s_axi_ctrl_bus_wdata  : in std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
+    s_axi_ctrl_bus_wstrb  : in std_logic_vector((C_S00_AXI_DATA_WIDTH/8)-1 downto 0);
+    s_axi_ctrl_bus_wvalid : in std_logic;
+    s_axi_ctrl_bus_wready : out std_logic;
+    s_axi_ctrl_bus_bresp  : out std_logic_vector(1 downto 0);
+    s_axi_ctrl_bus_bvalid : out std_logic;
+    s_axi_ctrl_bus_bready : in std_logic;
+    s_axi_ctrl_bus_araddr : in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
+    --s_axi_ctrl_bus_arprot : in std_logic_vector(2 downto 0);
+    s_axi_ctrl_bus_arvalid  : in std_logic;
+    s_axi_ctrl_bus_arready  : out std_logic;
+    s_axi_ctrl_bus_rdata  : out std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
+    s_axi_ctrl_bus_rresp  : out std_logic_vector(1 downto 0);
+    s_axi_ctrl_bus_rvalid : out std_logic;
+    s_axi_ctrl_bus_rready : in std_logic;
 
     -- Ports of Axi Master Bus Interface
-    --m_axi_mem_aclk	: in std_logic;
-    --m_axi_mem_aresetn	: in std_logic;
-    m_axi_mem_bus_awaddr	: out std_logic_vector(C_M00_AXI_ADDR_WIDTH-1 downto 0);
-    m_axi_mem_bus_awprot	: out std_logic_vector(2 downto 0);
-    m_axi_mem_bus_awvalid	: out std_logic;
-    m_axi_mem_bus_awready	: in std_logic;
-    m_axi_mem_bus_wdata 	:  out std_logic_vector(C_M00_AXI_DATA_WIDTH-1 downto 0);
-    m_axi_mem_bus_wstrb	    : out std_logic_vector(C_M00_AXI_DATA_WIDTH/8-1 downto 0);
-    m_axi_mem_bus_wvalid	: out std_logic;
-    m_axi_mem_bus_wready	: in std_logic;
-    m_axi_mem_bus_bresp	    : in std_logic_vector(1 downto 0);
-    m_axi_mem_bus_bvalid	: in std_logic;
-    m_axi_mem_bus_bready	: out std_logic;
-    m_axi_mem_bus_araddr	: out std_logic_vector(C_M00_AXI_ADDR_WIDTH-1 downto 0);
-    m_axi_mem_bus_arprot	: out std_logic_vector(2 downto 0);
-    m_axi_mem_bus_arvalid	: out std_logic;
-    m_axi_mem_bus_arready	: in std_logic;
-    m_axi_mem_bus_rdata	    : in std_logic_vector(C_M00_AXI_DATA_WIDTH-1 downto 0);
-    m_axi_mem_bus_rresp 	: in std_logic_vector(1 downto 0);
-    m_axi_mem_bus_rvalid	: in std_logic;
-    m_axi_mem_bus_rready	: out std_logic
-	);
+    --m_axi_mem_aclk  : in std_logic;
+    --m_axi_mem_aresetn : in std_logic;
+    m_axi_mem_bus_awaddr  : out std_logic_vector(C_M00_AXI_ADDR_WIDTH-1 downto 0);
+    m_axi_mem_bus_awprot  : out std_logic_vector(2 downto 0);
+    m_axi_mem_bus_awvalid : out std_logic;
+    m_axi_mem_bus_awready : in std_logic;
+    m_axi_mem_bus_wdata   :  out std_logic_vector(C_M00_AXI_DATA_WIDTH-1 downto 0);
+    m_axi_mem_bus_wstrb     : out std_logic_vector(C_M00_AXI_DATA_WIDTH/8-1 downto 0);
+    m_axi_mem_bus_wvalid  : out std_logic;
+    m_axi_mem_bus_wready  : in std_logic;
+    m_axi_mem_bus_bresp     : in std_logic_vector(1 downto 0);
+    m_axi_mem_bus_bvalid  : in std_logic;
+    m_axi_mem_bus_bready  : out std_logic;
+    m_axi_mem_bus_araddr  : out std_logic_vector(C_M00_AXI_ADDR_WIDTH-1 downto 0);
+    m_axi_mem_bus_arprot  : out std_logic_vector(2 downto 0);
+    m_axi_mem_bus_arvalid : out std_logic;
+    m_axi_mem_bus_arready : in std_logic;
+    m_axi_mem_bus_rdata     : in std_logic_vector(C_M00_AXI_DATA_WIDTH-1 downto 0);
+    m_axi_mem_bus_rresp   : in std_logic_vector(1 downto 0);
+    m_axi_mem_bus_rvalid  : in std_logic;
+    m_axi_mem_bus_rready  : out std_logic
+  );
 end fred_mod_lite_v1_0;
 
 architecture arch_imp of fred_mod_lite_v1_0 is
 
-	component fred_mod_ctrl_bus_s_axi is
+  component fred_mod_ctrl_bus_s_axi is
     generic (
       C_S_AXI_ADDR_WIDTH    : INTEGER := 7;
       C_S_AXI_DATA_WIDTH    : INTEGER := 32
@@ -127,12 +127,12 @@ architecture arch_imp of fred_mod_lite_v1_0 is
       mem_in                :out  STD_LOGIC_VECTOR(31 downto 0);
       mem_out               :out  STD_LOGIC_VECTOR(31 downto 0)
     );
-	end component;
+  end component;
 
   component fred_mod_lite_v1_0_M00_AXI is
     generic (
-      C_M_AXI_ADDR_WIDTH	: integer	:= 32;
-      C_M_AXI_DATA_WIDTH	: integer	:= 32
+      C_M_AXI_ADDR_WIDTH  : integer := 32;
+      C_M_AXI_DATA_WIDTH  : integer := 32
     );
     port (
       IW_EXEC : in std_logic;
@@ -145,36 +145,36 @@ architecture arch_imp of fred_mod_lite_v1_0 is
       IR_ADDR  : in std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
       IR_DATA  : out std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
 
-      M_AXI_ACLK	: in std_logic;
-      M_AXI_ARESETN	: in std_logic;
-      M_AXI_AWADDR	: out std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
-      M_AXI_AWPROT	: out std_logic_vector(2 downto 0);
-      M_AXI_AWVALID	: out std_logic;
-      M_AXI_AWREADY	: in std_logic;
-      M_AXI_WDATA	: out std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
-      M_AXI_WSTRB	: out std_logic_vector(C_M_AXI_DATA_WIDTH/8-1 downto 0);
-      M_AXI_WVALID	: out std_logic;
-      M_AXI_WREADY	: in std_logic;
-      M_AXI_BRESP	: in std_logic_vector(1 downto 0);
-      M_AXI_BVALID	: in std_logic;
-      M_AXI_BREADY	: out std_logic;
-      M_AXI_ARADDR	: out std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
-      M_AXI_ARPROT	: out std_logic_vector(2 downto 0);
-      M_AXI_ARVALID	: out std_logic;
-      M_AXI_ARREADY	: in std_logic;
-      M_AXI_RDATA	: in std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
-      M_AXI_RRESP	: in std_logic_vector(1 downto 0);
-      M_AXI_RVALID	: in std_logic;
-      M_AXI_RREADY	: out std_logic
+      M_AXI_ACLK  : in std_logic;
+      M_AXI_ARESETN : in std_logic;
+      M_AXI_AWADDR  : out std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
+      M_AXI_AWPROT  : out std_logic_vector(2 downto 0);
+      M_AXI_AWVALID : out std_logic;
+      M_AXI_AWREADY : in std_logic;
+      M_AXI_WDATA : out std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
+      M_AXI_WSTRB : out std_logic_vector(C_M_AXI_DATA_WIDTH/8-1 downto 0);
+      M_AXI_WVALID  : out std_logic;
+      M_AXI_WREADY  : in std_logic;
+      M_AXI_BRESP : in std_logic_vector(1 downto 0);
+      M_AXI_BVALID  : in std_logic;
+      M_AXI_BREADY  : out std_logic;
+      M_AXI_ARADDR  : out std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
+      M_AXI_ARPROT  : out std_logic_vector(2 downto 0);
+      M_AXI_ARVALID : out std_logic;
+      M_AXI_ARREADY : in std_logic;
+      M_AXI_RDATA : in std_logic_vector(C_M_AXI_DATA_WIDTH-1 downto 0);
+      M_AXI_RRESP : in std_logic_vector(1 downto 0);
+      M_AXI_RVALID  : in std_logic;
+      M_AXI_RREADY  : out std_logic
     );
   end component;
   
   component fred_mod_lite_v1_0_core is
     generic (
-      C_S_AXI_ADDR_WIDTH	: integer	:= 32;
-      C_S_AXI_DATA_WIDTH	: integer	:= 32;
-      C_M_AXI_ADDR_WIDTH	: integer	:= 32;
-      C_M_AXI_DATA_WIDTH	: integer	:= 32
+      C_S_AXI_ADDR_WIDTH  : integer := 32;
+      C_S_AXI_DATA_WIDTH  : integer := 32;
+      C_M_AXI_ADDR_WIDTH  : integer := 32;
+      C_M_AXI_DATA_WIDTH  : integer := 32
     );
     port (
       aclk                  : in   std_logic;
@@ -191,10 +191,10 @@ architecture arch_imp of fred_mod_lite_v1_0 is
       args_address0         : out  std_logic_vector(2 downto 0);
       args_ce0              : out  std_logic;
       args_q0               : in   std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
---      mem_in                : in   std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
---      mem_out               : in   std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-
-    -- AXI master internal control signals
+      --mem_in                : in   std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+      --mem_out               : in   std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+      
+      -- AXI master internal control signals
       IW_EXEC               : out  std_logic;
       IW_DONE               : in   std_logic;
       IW_ADDR               : out  std_logic_vector(C_M_AXI_ADDR_WIDTH-1 downto 0);
@@ -219,8 +219,8 @@ architecture arch_imp of fred_mod_lite_v1_0 is
   signal args_ce0_i       : std_logic;
   signal args_q0_i        : std_logic_vector(31 downto 0);
   signal args_q0_i_ex     : std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
---  signal mem_in_i         : std_logic_vector(31 downto 0);
---  signal mem_out_i        : std_logic_vector(31 downto 0);
+  --signal mem_in_i         : std_logic_vector(31 downto 0);
+  --signal mem_out_i        : std_logic_vector(31 downto 0);
   
   signal iw_exec_i        : std_logic;
   signal iw_done_i        : std_logic;
@@ -244,57 +244,57 @@ begin
 
 -- Instantiation of Axi Bus Interface S00_AXI
 slave_axi : fred_mod_ctrl_bus_s_axi
-	generic map (
-		C_S_AXI_DATA_WIDTH	=> C_S00_AXI_DATA_WIDTH,
-		C_S_AXI_ADDR_WIDTH	=> C_S00_AXI_ADDR_WIDTH
-	)
-	port map (
-		ACLK	=> ap_clk,
-		ARESET 	=> ap_rst_n_inv,
-		AWADDR	=> s_axi_ctrl_bus_awaddr,
-		--AWPROT	=> s_axi_ctrl_bus_awprot,
-		AWVALID	=> s_axi_ctrl_bus_awvalid,
-		AWREADY	=> s_axi_ctrl_bus_awready,
-		WDATA	=> s_axi_ctrl_bus_wdata,
-		WSTRB	=> s_axi_ctrl_bus_wstrb,
-		WVALID	=> s_axi_ctrl_bus_wvalid,
-		WREADY	=> s_axi_ctrl_bus_wready,
-		BRESP	=> s_axi_ctrl_bus_bresp,
-		BVALID	=> s_axi_ctrl_bus_bvalid,
-		BREADY	=> s_axi_ctrl_bus_bready,
-		ARADDR	=> s_axi_ctrl_bus_araddr,
-		--ARPROT	=> s_axi_ctrl_bus_arprot,
-		ARVALID	=> s_axi_ctrl_bus_arvalid,
-		ARREADY	=> s_axi_ctrl_bus_arready,
-		RDATA	=> s_axi_ctrl_bus_rdata,
-		RRESP	=> s_axi_ctrl_bus_rresp,
-		RVALID	=> s_axi_ctrl_bus_rvalid,
-		RREADY	=> s_axi_ctrl_bus_rready,
-		
-		ACLK_EN => '1',
+  generic map (
+    C_S_AXI_DATA_WIDTH  => C_S00_AXI_DATA_WIDTH,
+    C_S_AXI_ADDR_WIDTH  => C_S00_AXI_ADDR_WIDTH
+  )
+  port map (
+    ACLK  => ap_clk,
+    ARESET  => ap_rst_n_inv,
+    AWADDR  => s_axi_ctrl_bus_awaddr,
+    --AWPROT  => s_axi_ctrl_bus_awprot,
+    AWVALID => s_axi_ctrl_bus_awvalid,
+    AWREADY => s_axi_ctrl_bus_awready,
+    WDATA => s_axi_ctrl_bus_wdata,
+    WSTRB => s_axi_ctrl_bus_wstrb,
+    WVALID  => s_axi_ctrl_bus_wvalid,
+    WREADY  => s_axi_ctrl_bus_wready,
+    BRESP => s_axi_ctrl_bus_bresp,
+    BVALID  => s_axi_ctrl_bus_bvalid,
+    BREADY  => s_axi_ctrl_bus_bready,
+    ARADDR  => s_axi_ctrl_bus_araddr,
+    --ARPROT  => s_axi_ctrl_bus_arprot,
+    ARVALID => s_axi_ctrl_bus_arvalid,
+    ARREADY => s_axi_ctrl_bus_arready,
+    RDATA => s_axi_ctrl_bus_rdata,
+    RRESP => s_axi_ctrl_bus_rresp,
+    RVALID  => s_axi_ctrl_bus_rvalid,
+    RREADY  => s_axi_ctrl_bus_rready,
     
-        ap_start => ap_start_i,
-        ap_done => ap_done_i,
-        ap_ready => ap_ready_i,
-        ap_idle => ap_idle_i,
-        id => id_i,
-        id_ap_vld => id_ap_vld_i,
-        args_address0 => args_address0_i,
-        args_ce0 => args_ce0_i,
-        args_q0 => args_q0_i,
-        mem_in => open,
-        mem_out => open,
-        
-        interrupt => interrupt
-	);
+    ACLK_EN => '1',
+    
+    ap_start => ap_start_i,
+    ap_done => ap_done_i,
+    ap_ready => ap_ready_i,
+    ap_idle => ap_idle_i,
+    id => id_i,
+    id_ap_vld => id_ap_vld_i,
+    args_address0 => args_address0_i,
+    args_ce0 => args_ce0_i,
+    args_q0 => args_q0_i,
+    mem_in => open,
+    mem_out => open,
+    
+    interrupt => interrupt
+  );
 
 -- Instantiation of Axi Bus Interface M00_AXI
 master_axi : fred_mod_lite_v1_0_M00_AXI
-	generic map (
-		C_M_AXI_ADDR_WIDTH	=> C_M00_AXI_ADDR_WIDTH,
-		C_M_AXI_DATA_WIDTH	=> C_M00_AXI_DATA_WIDTH
-	)
-	port map (
+  generic map (
+    C_M_AXI_ADDR_WIDTH  => C_M00_AXI_ADDR_WIDTH,
+    C_M_AXI_DATA_WIDTH  => C_M00_AXI_DATA_WIDTH
+  )
+  port map (
     IW_EXEC => iw_exec_i,
     IW_DONE => iw_done_i,
     IW_ADDR => iw_addr_i,
@@ -311,11 +311,11 @@ master_axi : fred_mod_lite_v1_0_M00_AXI
     M_AXI_AWPROT => m_axi_mem_bus_awprot,
     M_AXI_AWVALID => m_axi_mem_bus_awvalid,
     M_AXI_AWREADY => m_axi_mem_bus_awready,
-    M_AXI_WDATA	=> m_axi_mem_bus_wdata,
-    M_AXI_WSTRB	=> m_axi_mem_bus_wstrb,
+    M_AXI_WDATA => m_axi_mem_bus_wdata,
+    M_AXI_WSTRB => m_axi_mem_bus_wstrb,
     M_AXI_WVALID => m_axi_mem_bus_wvalid,
     M_AXI_WREADY => m_axi_mem_bus_wready,
-    M_AXI_BRESP	=> m_axi_mem_bus_bresp,
+    M_AXI_BRESP => m_axi_mem_bus_bresp,
     M_AXI_BVALID => m_axi_mem_bus_bvalid,
     M_AXI_BREADY => m_axi_mem_bus_bready,
     M_AXI_ARADDR => m_axi_mem_bus_araddr,
@@ -326,7 +326,7 @@ master_axi : fred_mod_lite_v1_0_M00_AXI
     M_AXI_RRESP => m_axi_mem_bus_rresp,
     M_AXI_RVALID => m_axi_mem_bus_rvalid,
     M_AXI_RREADY => m_axi_mem_bus_rready
-	);
+  );
 
 core : fred_mod_lite_v1_0_core
   generic map (
